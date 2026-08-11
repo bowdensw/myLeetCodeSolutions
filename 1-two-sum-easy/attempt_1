@@ -1,9 +1,7 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashTable = {}; sol = []; i = 0;
-        for num in nums:
+        hashTable = {};
+        for i, num in enumerate(nums):
             if (target - num) in hashTable:
                 return ([hashTable.get(target-num),i])
             hashTable[num] = i
-            i += 1
-        return sol

@@ -1,0 +1,21 @@
+class Solution:
+    def maxNumberOfFamilies(self, n: int, reservedSeats: List[List[int]]) -> int:
+        # create hashmap, put in row as key, 8-bitmask as value
+        left = 0b11110000; middle = 0b11000011; right = 0b00001111; zero = 0b00000000
+        # defaulted to 0 for value
+        occupiedMap = collections.defaultdict(int)
+
+        #mark each occupied seat on the bitmask of each corresponding row
+        for seat in reservedSeats:
+            if 2 <= seat[1] <= 9:
+                occupiedMap[seat[0]] |= 1 << (seat[1] - 2)
+
+        sol = (n - len(occupiedMap)) * 2
+        for row, bitMask in occupiedMap.items():
+            if ((bitMask | left) == left or
+                (bitMask | right) == right or
+                (bitMask | middle) == middle):
+                sol += 1
+
+        return sol
+

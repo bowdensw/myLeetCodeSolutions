@@ -1,0 +1,16 @@
+class Solution:
+    def shortestBeautifulSubstring(self, s: str, k: int) -> str:
+        if s.count("1") < k:
+            return ""
+        sol = s; cnt = left = 0
+        for right, ch in enumerate(s):
+            cnt += int(ch)
+            while cnt > k or s[left] == "0":
+                cnt -= int(s[left])
+                left += 1
+            if cnt == k:
+                temp = s[left:right + 1]
+                if len(temp) < len(sol) or len(temp) == len(sol) and temp < sol:
+                    sol = temp
+
+        return sol

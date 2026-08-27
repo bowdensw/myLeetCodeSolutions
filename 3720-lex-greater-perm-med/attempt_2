@@ -1,0 +1,48 @@
+class Solution:
+    def lexGreaterPermutation(self, s: str, target: str) -> str:
+        n = len(target)
+        freq = [0] * 26
+        for ch in s:
+            freq[ord(ch) - 97] += 1
+            
+        best_prefix_len = -1
+        best_char_idx = -1
+        
+        matched = []
+        
+        for i in range(n):
+            target_idx = ord(target[i]) - 97
+            
+            for j in range(target_idx + 1, 26):
+                if freq[j] > 0:
+                    best_prefix_len = i
+                    best_char_idx = j
+                    break
+            
+            if freq[target_idx] > 0:
+                matched.append(target[i])
+                freq[target_idx] -= 1
+            else:
+                break
+                
+        if best_prefix_len == -1:
+            return ""
+            
+        freq = [0] * 26
+        for ch in s:
+            freq[ord(ch) - 97] += 1
+            
+        sol = list(target[:best_prefix_len])
+        for ch in sol:
+            freq[ord(ch) - 97] -= 1
+            
+        # add sought character
+        sol.append(chr(best_char_idx + 97))
+        freq[best_char_idx] -= 1
+        
+        for j in range(26):
+            while freq[j] > 0:
+                sol.append(chr(j + 97))
+                freq[j] -= 1
+                
+        return "".join(sol)

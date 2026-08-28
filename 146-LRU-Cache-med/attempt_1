@@ -1,0 +1,44 @@
+from collections import deque
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cache = {}
+        self.list = deque();
+        self.max_capacity = capacity
+
+        
+
+    def get(self, key: int) -> int:
+        if key in self.cache:
+            self.list.remove(key)
+            self.list.appendleft(key)
+            return self.cache[key]
+        else:
+            return -1
+        
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache[key] = value
+            self.list.remove(key)
+            self.list.appendleft(key)
+        else:
+            if len(self.cache) >= self.max_capacity:
+                lru_key = self.list.pop()
+                del self.cache[lru_key]
+            
+            self.cache[key] = value
+            self.list.appendleft(key)
+                
+
+
+
+
+        
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)

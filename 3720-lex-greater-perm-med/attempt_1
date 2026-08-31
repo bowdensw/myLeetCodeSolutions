@@ -1,0 +1,29 @@
+class Solution:
+    def lexGreaterPermutation(self, s: str, target: str) -> str:
+        sol = []
+        n = len(target)
+        freq = [0] * 26
+        equal = True
+
+        for ch in s:
+            freq[ord(ch) - 97] += 1
+
+        for i in range (n):
+            for j in range(26):
+                if (equal):
+                    if freq[j] != 0 and j == ord(target[i]) - 97:
+                        sol.append(target[i])
+                        freq[j] -= 1
+                        break
+                    if freq[j] != 0 and j > ord(target[i]) - 97:
+                        sol.append(chr(j + 97))
+                        freq[j] -= 1; equal = False
+                        break
+                else:
+                    if freq[j] != 0:
+                        sol.append(chr(j + 97))
+                        freq[j] -= 1
+                        break
+        trueSol = "".join(sol)
+        return trueSol if trueSol != target else ""
+

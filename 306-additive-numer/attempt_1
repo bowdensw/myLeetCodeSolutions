@@ -1,0 +1,35 @@
+class Solution:
+
+
+    def isValid(self, num1: str, num2: str, remainingStr: str) -> bool:
+        if remainingStr == "":
+            return True
+        correct_sum = int(num1) + int(num2)
+        places = len(str(correct_sum))
+        if (remainingStr[0:places] == str(correct_sum)):
+            return self.isValid(num2, correct_sum, remainingStr[places:])
+        return False
+
+        
+
+    def isAdditiveNumber(self, num: str) -> bool:
+        n = len(num)
+        remainder = ""
+        for i in range(1, n // 2 + 1):
+            if num[0] == "0" and i > 1:
+                break
+            first = num[0:i]
+            for j in range(i+1, n + 1):
+                if num[i] == "0" and j-i > 1:
+                    break
+                second = num[i:j]
+                sum = int(first) + int(second)
+                places = len(str(sum))
+                if num[j:j+places] == str(sum):
+                    remainder = num[j:]
+                    if self.isValid(first, second, remainder):
+                        return True
+        return False
+        
+
+            

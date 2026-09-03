@@ -1,0 +1,34 @@
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        #check empty condition
+        if not nums:
+            return []
+        start = str(nums[0])
+        end = ""
+        sol = []
+        i = 0
+        n = len(nums)
+        while i < n:
+            # if at last element, return range if start != cur, singular element if start == cur
+            if i == n - 1:
+                if start != str(nums[i]):
+                    end = str(nums[i])
+                    sol.append(start + "->" + end)
+                else:
+                    sol.append(start)
+            # correct condition, update end
+            elif nums[i] + 1 == nums[i + 1]:
+                end = str(nums[i])
+            # range break; assign where it breaks to end if range, push start if no range.
+            # reset start from next element outside range, end to empty
+            else:
+                if end:
+                    end = str(nums[i])
+                    sol.append(start + "->" + end)
+                else:
+                    sol.append(start)
+                start = str(nums[i + 1])
+                end = ""
+            i += 1
+
+        return sol

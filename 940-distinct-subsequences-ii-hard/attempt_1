@@ -1,0 +1,15 @@
+class Solution:
+    def distinctSubseqII(self, s: str) -> int:
+        n = len(s)
+        modifier = 10 ** 9 + 7
+        dp = [1]
+        prevFoundChars = {}
+
+        # pow 2 - 1, always minus 1 actually
+        for i in range (n):
+            dp.append(dp[-1] * 2)
+            if prevFoundChars.get(s[i]) != None:
+                    dp[-1] -= dp[prevFoundChars[s[i]]]
+            prevFoundChars[s[i]] = i
+        return (dp[-1] - 1) % modifier
+        

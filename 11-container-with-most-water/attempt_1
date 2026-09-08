@@ -1,0 +1,18 @@
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        n = len(height)
+        i = 0
+        j = len(height) - 1
+        maxArea = 0
+        while i != j:
+            maxHeight = min(height[i], height[j])
+            if (maxHeight * (j-i)) > maxArea:
+                maxArea = maxHeight * (j-i)
+            if height[i] < height[j]:
+                i += 1
+            else:
+                j -= 1
+        return maxArea
+                
+
+        

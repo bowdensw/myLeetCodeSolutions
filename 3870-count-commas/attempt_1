@@ -1,0 +1,8 @@
+class Solution:
+    def countCommas(self, n: int) -> int:
+        places = len(str(n))
+        if places < 4:
+            return 0
+        if places <= 6:
+            return n - 1000 + 1
+        
